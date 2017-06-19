@@ -19,6 +19,6 @@ def init(loop):
     return server
 
 
-loop = asyncio.get_event_loop()
-loop.run_until_complete(init(loop))
-loop.run_forever()
+mloop = asyncio.get_event_loop()
+mloop.run_until_complete(init(mloop))
+mloop.run_forever()
