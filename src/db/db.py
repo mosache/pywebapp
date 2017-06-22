@@ -2,7 +2,7 @@ import asyncio
 import logging
 import aiomysql
 
-
+logging.basicConfig(level=logging.INFO)
 @asyncio.coroutine
 def create_pool(loop, **kw):
     logging.info('create datebase connect pool')
@@ -29,7 +29,7 @@ async def destory_pool():
 
 @asyncio.coroutine
 def select(sql, args, size=None):
-    logging.info(sql, args)
+    logging.info(sql)
     global __pool
     with(yield from __pool) as conn:
         cur = yield from conn.cursor(aiomysql.DictCursor)
