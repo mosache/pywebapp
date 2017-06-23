@@ -9,8 +9,8 @@ from src.db.db import create_pool
 logging.basicConfig(level=logging.INFO)
 
 
-def index(request):
-    return web.Response(body=b'<h1>pywebapp</h1>', content_type='text/html')
+def add_static(app):
+    app.router.add_static('/static/', 'static')
 
 
 def init_jinja2(app, **kw):
@@ -42,6 +42,7 @@ def init(loop):
     app = web.Application(loop=loop, middlewares=[logger_factory, response_factory])
     init_jinja2(app)
     add_routes(app, 'handlers')
+    # add_static(app)
     server = yield from loop.create_server(app.make_handler(), '127.0.0.1', 9000)
     logging.info('server start at 127.0.0.1:9000')
     return server
