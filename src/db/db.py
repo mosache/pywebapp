@@ -1,8 +1,11 @@
 import asyncio
 import logging
+
 import aiomysql
 
 logging.basicConfig(level=logging.INFO)
+
+
 @asyncio.coroutine
 def create_pool(loop, **kw):
     logging.info('create datebase connect pool')
@@ -21,10 +24,11 @@ def create_pool(loop, **kw):
     )
 
 
-async def destory_pool():
+@asyncio.coroutine
+def destory_pool():
     if __pool is not None:
         __pool.close()
-        await __pool.wait_closed()
+        yield from __pool.wait_closed()
 
 
 @asyncio.coroutine

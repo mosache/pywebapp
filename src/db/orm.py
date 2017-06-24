@@ -2,6 +2,7 @@
 # coding=utf-8
 import logging
 import asyncio
+from asyncio import async
 from src.db.db import select
 from src.db.db import execute
 
@@ -101,8 +102,9 @@ class Model(dict, metaclass=ModelMetaClass):
         return cls(**rs[0])
 
     @classmethod
-    async def findAll(cls):
-        rs = await select('%s' % cls.__select__, [])
+    @asyncio.coroutine
+    def findAll(cls):
+        rs = yield from select('%s' % cls.__select__, [])
         return [cls(**r) for r in rs]
 
     @asyncio.coroutine
